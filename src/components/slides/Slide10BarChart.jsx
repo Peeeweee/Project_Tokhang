@@ -39,12 +39,12 @@ const BarRow = ({ label, width, value, fill, delay, highlight, opacity = 1 }) =>
 
 const Slide10BarChart = () => {
   const chartData = [
-    { label: "Police", width: "100%", value: "65.14", fill: "var(--text-main)", highlight: true },
-    { label: "News", width: "100%", value: "65.14", fill: "var(--text-main)", highlight: true },
-    { label: "Others", width: "89%", value: "58.04", fill: "var(--text-main)", opacity: 0.9 },
-    { label: "HR Groups", width: "29.4%", value: "19.17", fill: "var(--text-main)", opacity: 0.7 },
-    { label: "CHR", width: "14.3%", value: "9.34", fill: "var(--text-main)", opacity: 0.5 },
-    { label: "Church", width: "4.7%", value: "3.07", fill: "var(--text-main)", opacity: 0.3 }
+    { label: "Police", width: "100%", value: "65.1", fill: "var(--text-main)", highlight: true },
+    { label: "News", width: "100%", value: "65.1", fill: "var(--text-main)", highlight: true },
+    { label: "Others", width: "89%", value: "58.0", fill: "var(--text-main)", opacity: 0.9 },
+    { label: "HR Groups", width: "29.4%", value: "19.2", fill: "var(--text-main)", opacity: 0.7 },
+    { label: "CHR", width: "14.3%", value: "9.3", fill: "var(--text-main)", opacity: 0.5 },
+    { label: "Church", width: "4.7%", value: "3.1", fill: "var(--text-main)", opacity: 0.3 }
   ];
 
   return (
@@ -69,7 +69,7 @@ const Slide10BarChart = () => {
           color: '#888'
         }}
       >
-        The Information Gap · Betweenness Centrality
+        The Bridge Score · Information Control
       </motion.p>
 
       {/* Heading */}
@@ -86,7 +86,7 @@ const Slide10BarChart = () => {
           marginTop: '10px'
         }}
       >
-        How many bridges did each reporter control?
+        Who acted as the "Information Bridge"?
       </motion.h2>
 
       {/* Caption */}
@@ -95,14 +95,16 @@ const Slide10BarChart = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
         style={{
-          fontSize: '11px',
+          fontSize: '12px',
           color: '#444',
-          letterSpacing: '0.08em',
-          marginTop: '4px',
-          textTransform: 'uppercase'
+          letterSpacing: '0.05em',
+          marginTop: '12px',
+          maxWidth: '500px',
+          textAlign: 'center',
+          lineHeight: 1.6
         }}
       >
-        Higher = more central to the flow of information between nodes.
+        A higher score means that group was a critical "bridge." Without them, news wouldn't travel between the police and the public.
       </motion.p>
 
       {/* Chart Block */}

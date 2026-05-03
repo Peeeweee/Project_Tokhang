@@ -1,121 +1,102 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const InsightItem = ({ num, text, delay }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration: 0.8 }}
-      style={{ display: 'flex', gap: '20px', alignItems: 'flex-start', marginBottom: '26px', maxWidth: '640px' }}
-    >
-      <div style={{ 
-        fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', 
-        fontWeight: 700, 
-        color: 'var(--text-secondary)', 
-        opacity: 0.2,
-        lineHeight: 1, 
-        flexShrink: 0, 
-        width: '48px', 
-        textAlign: 'right' 
-      }}>
-        {num}
-      </div>
-      <div style={{ 
-        fontSize: 'clamp(0.78rem, 1.2vw, 0.95rem)', 
-        fontWeight: 300, 
-        color: 'var(--text-secondary)', 
-        lineHeight: 1.8, 
-        paddingTop: '4px' 
-      }}>
+const FindingRow = ({ num, title, text, delay }) => (
+  <motion.div
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ delay, duration: 0.8 }}
+    style={{ display: 'flex', gap: '30px', alignItems: 'flex-start', width: '100%' }}
+  >
+    <div style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 900, color: 'var(--text-main)', opacity: 0.1, lineHeight: 1, flexShrink: 0 }}>
+      {num}
+    </div>
+    <div>
+      <h3 style={{ fontSize: '14px', fontWeight: 700, letterSpacing: '0.1em', marginBottom: '8px', color: 'var(--text-main)' }}>
+        {title}
+      </h3>
+      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '600px' }}>
         {text}
-      </div>
-    </motion.div>
-  );
-};
+      </p>
+    </div>
+  </motion.div>
+);
 
 const Slide11Meaning = () => {
   return (
-    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative', padding: 'var(--slide-padding)' }}>
       {/* Corner Marks */}
       <span className="corner-mark tl" />
       <span className="corner-mark tr" />
       <span className="corner-mark bl" />
       <span className="corner-mark br" />
 
-      {/* Label */}
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="label"
-      >
-        What the Network Reveals
-      </motion.p>
+      <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: '900px' }}>
+        {/* Label */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="label"
+        >
+          Final Results · What the Data Shows
+        </motion.p>
 
-      {/* Heading */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        style={{
-          fontSize: 'clamp(1.8rem, 4.5vw, 3.2rem)',
-          fontWeight: 700,
-          marginTop: '10px'
-        }}
-      >
-        The structure speaks.
-      </motion.h2>
+        {/* Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          style={{
+            fontSize: 'clamp(2rem, 5vw, 4rem)',
+            fontWeight: 800,
+            textAlign: 'center',
+            marginBottom: '60px',
+            letterSpacing: '-0.02em'
+          }}
+        >
+          The Story Behind the Connections.
+        </motion.h2>
 
-      <div className="divider" style={{ background: 'var(--text-secondary)', opacity: 0.15 }} />
+        {/* Findings List */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+          <FindingRow 
+            num="01" 
+            title="AN 'INNER CIRCLE' OF CONTROL" 
+            text="Our map shows that a very small group of people controls almost all the information. Instead of many voices, everything flows through just a few key 'gatekeepers' who decide what gets reported."
+            delay={0.3}
+          />
+          <FindingRow 
+            num="02" 
+            title="A NATIONWIDE PATTERN" 
+            text="This wasn't just a few isolated cases. Every single police station we studied was linked to at least one killing, showing that this was a widespread problem across the whole country."
+            delay={0.5}
+          />
+          <FindingRow 
+            num="03" 
+            title="THE WATCHDOGS WERE LEFT OUT" 
+            text="The people who were supposed to hold others accountable (the 'watchdogs') were kept on the outside of the network. They had the least power to see or report what was actually happening."
+            delay={0.7}
+          />
+        </div>
 
-      {/* Insights List */}
-      <div style={{ marginTop: '20px' }}>
-        <InsightItem 
-          num="01"
-          text={
-            <>
-              The analysis reveals a <strong style={{ color: 'var(--text-main)', fontWeight: 600 }}>CORE-PERIPHERY STRUCTURE</strong> — where a primary set of nodes serves as the predominant gateway for information flow. This indicates a documentation environment organized around specific reporting channels.
-            </>
-          }
-          delay={0.4}
-        />
-        <InsightItem 
-          num="02"
-          text={
-            <>
-              <strong style={{ color: 'var(--text-main)', fontWeight: 600 }}>POLICE KILLING WAS UNIVERSAL.</strong> All 25 stations in the dataset had at least one recorded police killing — suggesting these weren't isolated events, but a nationwide pattern.
-            </>
-          }
-          delay={0.65}
-        />
-        <InsightItem 
-          num="03"
-          text={
-            <>
-              The nodes with the <strong style={{ color: 'var(--text-main)', fontWeight: 600 }}>MOST POWER TO DOCUMENT</strong> were also the nodes most closely associated with the events being documented. Accountability bodies sat at the periphery.
-            </>
-          }
-          delay={0.9}
-        />
+        {/* Footnote */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 1.2 }}
+          style={{
+            marginTop: '60px',
+            fontSize: '10px',
+            fontFamily: 'var(--font)',
+            letterSpacing: '0.1em',
+            textAlign: 'center',
+            maxWidth: '600px',
+            textTransform: 'uppercase'
+          }}
+        >
+          Note: This study looks at how information travels — it does not prove guilt or legal causation.
+        </motion.p>
       </div>
-
-      {/* Disclaimer */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        style={{
-          fontSize: '10px',
-          color: '#2a2a2a',
-          letterSpacing: '0.12em',
-          textAlign: 'center',
-          marginTop: '20px',
-          textTransform: 'uppercase'
-        }}
-      >
-        Note: This analysis reveals structural patterns in documentation — not legal judgment or causation.
-      </motion.p>
     </div>
   );
 };

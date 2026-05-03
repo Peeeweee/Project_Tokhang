@@ -31,7 +31,7 @@ const Slide04Context = () => {
           transition={{ delay: 0.2 }}
           className="label"
         >
-          Context · The Scope of Analysis
+          Project Background · The Data
         </motion.p>
 
         <motion.div
@@ -49,20 +49,20 @@ const Slide04Context = () => {
         >
           <StatCol 
             num="42" 
-            label="Total Killings" 
-            detail="Aggregated from multiple sources" 
+            label="Verified Killings" 
+            detail="Reported deaths found in public records" 
           />
           <div style={{ width: '1px', height: '100px', background: 'var(--text-secondary)', opacity: 0.1, alignSelf: 'center' }} />
           <StatCol 
             num="36" 
-            label="Police Nodes" 
-            detail="Precincts & stations involved" 
+            label="Police Stations" 
+            detail="Precincts that reported these events" 
           />
           <div style={{ width: '1px', height: '100px', background: 'var(--text-secondary)', opacity: 0.1, alignSelf: 'center' }} />
           <StatCol 
             num="18" 
-            label="Media Entities" 
-            detail="Reporters & news agencies" 
+            label="News Outlets" 
+            detail="Newspapers & reporters tracked" 
           />
         </motion.div>
 
@@ -87,8 +87,8 @@ const Slide04Context = () => {
             fontWeight: 300
           }}
         >
-          Our study focuses on the <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>centrality</span> of reporting. 
-          By mapping connections, we identify who controls the flow of information.
+          Our study focuses on <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>who controls the news</span>. 
+          By mapping the links between police and reporters, we can see how the story is told.
         </motion.p>
       </div>
     </div>
