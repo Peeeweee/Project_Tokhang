@@ -18,12 +18,13 @@ import Slide09OuterEdge from './slides/Slide09OuterEdge';
 import Slide10BarChart from './slides/Slide10BarChart';
 import Slide11Meaning from './slides/Slide11Meaning';
 import Slide12Closing from './slides/Slide12Closing';
+import Slide13Outro from './slides/Slide13Outro';
 
 const slideComponents = [
   Slide00Intro, Slide01Hook, Slide02Question, Slide03Title, Slide04Context,
   Slide05Method, Slide06NetworkExplained, Slide07NetworkMap,
   Slide08InnerCircle, Slide09OuterEdge, Slide10BarChart,
-  Slide11Meaning, Slide12Closing
+  Slide11Meaning, Slide12Closing, Slide13Outro
 ];
 
 const variants = {

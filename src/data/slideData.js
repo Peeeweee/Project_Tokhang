@@ -11,5 +11,6 @@ export const slideData = [
   { id: 9, title: "Outer Edge",       transition: "slideHorizontal" },
   { id: 10, title: "The Gap",         transition: "slideHorizontal" },
   { id: 11, title: "Meaning",         transition: "slideUp" },
-  { id: 12, title: "Closing",         transition: "fadeOnly" }
+  { id: 12, title: "Closing",         transition: "fadeOnly" },
+  { id: 13, title: "Thank You",       transition: "scaleUp" }
 ];
