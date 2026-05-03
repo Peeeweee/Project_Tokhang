@@ -12,44 +12,58 @@ const NetworkSVG = ({ animate }) => {
   const centerPos = { x: 370, y: 220 };
 
   const accountabilityNodes = [
-    { id: 'hr', cx: 72, cy: 210, r: 20, label: ['HR', 'Groups'], fontSize: 6, fill: '#444' },
-    { id: 'chr', cx: 680, cy: 80, r: 15, label: ['CHR'], fontSize: 6.5, fill: '#3a3a3a' },
-    { id: 'church', cx: 690, cy: 365, r: 12, label: ['Church'], fontSize: 5.5, fill: '#333' }
+    { id: 'hr', cx: 72, cy: 210, r: 22, label: ['HR', 'Groups'], fontSize: 6.5, fill: '#444' },
+    { id: 'chr', cx: 680, cy: 80, r: 18, label: ['CHR'], fontSize: 7, fill: '#3a3a3a' },
+    { id: 'church', cx: 690, cy: 365, r: 15, label: ['Church'], fontSize: 6, fill: '#333' }
   ];
 
   return (
-    <svg viewBox="0 0 740 420" style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
+    <svg viewBox="0 0 740 420" style={{ width: '100%', height: '100%', position: 'absolute', inset: 0, overflow: 'visible' }}>
       <defs>
-        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="2" result="blur" />
+        {/* Glow Filters */}
+        <filter id="glow-small" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.5" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
-        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.1" />
+        <filter id="glow-large" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
+        
+        {/* Gradients */}
+        <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+          <stop offset="0%" stopColor="var(--text-main)" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="var(--text-main)" stopOpacity="0.05" />
+        </radialGradient>
       </defs>
 
-      {/* Background — using CSS variable or transparent */}
-      <rect width="740" height="420" fill="transparent" />
+      {/* 1. Background Technical Grid */}
+      <g opacity="0.03" stroke="var(--text-main)" strokeWidth="0.5">
+        {[...Array(15)].map((_, i) => (
+          <line key={`v-${i}`} x1={i * 50} y1="0" x2={i * 50} y2="420" />
+        ))}
+        {[...Array(9)].map((_, i) => (
+          <line key={`h-${i}`} x1="0" y1={i * 50} x2="740" y2={i * 50} />
+        ))}
+      </g>
 
-      {/* Reference Rings */}
-      <circle cx="370" cy="210" r="170" fill="none" stroke="var(--text-secondary)" strokeWidth="0.8" strokeDasharray="4,6" opacity="0.25" />
-      <circle cx="370" cy="210" r="105" fill="none" stroke="var(--text-secondary)" strokeWidth="0.8" opacity="0.2" />
+      {/* 2. Reference Radar Rings */}
+      <circle cx="370" cy="210" r="180" fill="none" stroke="var(--text-secondary)" strokeWidth="0.5" strokeDasharray="2,4" opacity="0.15" />
+      <circle cx="370" cy="210" r="120" fill="none" stroke="var(--text-secondary)" strokeWidth="1" opacity="0.1" />
+      <circle cx="370" cy="210" r="60" fill="none" stroke="var(--text-secondary)" strokeWidth="0.5" opacity="0.05" />
 
-      {/* Edges from PS to Center */}
+      {/* 3. Connection Lines (Edges) */}
       {policeStations.map((ps, i) => (
         <motion.line
           key={`edge-${i}`}
-          x1={ps.cx}
-          y1={ps.cy}
-          x2={centerPos.x}
-          y2={centerPos.y}
+          x1={ps.cx} y1={ps.cy}
+          x2={centerPos.x} y2={centerPos.y}
           stroke="var(--text-main)"
-          strokeWidth="1"
-          opacity="0.25"
+          strokeWidth="1.2"
+          opacity="0.15"
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={animate ? { pathLength: 1, opacity: 0.25 } : {}}
-          transition={{ delay: 0.5 + i * 0.04, duration: 1.2, ease: "easeInOut" }}
+          animate={animate ? { pathLength: 1, opacity: 0.15 } : {}}
+          transition={{ delay: 0.2 + i * 0.03, duration: 1.5, ease: "easeOut" }}
         />
       ))}
 
@@ -57,56 +71,50 @@ const NetworkSVG = ({ animate }) => {
       {accountabilityNodes.map((node) => (
         <motion.line
           key={`acc-edge-${node.id}`}
-          x1={node.cx}
-          y1={node.cy}
-          x2={centerPos.x}
-          y2={centerPos.y}
+          x1={node.cx} y1={node.cy}
+          x2={centerPos.x} y2={centerPos.y}
           stroke="var(--text-main)"
-          strokeWidth="1.2"
-          strokeDasharray="3,3"
-          opacity="0.3"
+          strokeWidth="1"
+          strokeDasharray="4,4"
+          opacity="0.2"
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={animate ? { pathLength: 1, opacity: 0.3 } : {}}
-          transition={{ delay: 1.5, duration: 1.5 }}
+          animate={animate ? { pathLength: 1, opacity: 0.2 } : {}}
+          transition={{ delay: 1.2, duration: 2 }}
         />
       ))}
 
-      {/* Police Station Nodes */}
+      {/* 4. Peripheral Nodes (Police Stations) */}
       {policeStations.map((ps, i) => (
-        <circle
-          key={`ps-${i}`}
-          cx={ps.cx}
-          cy={ps.cy}
-          r="7"
-          fill="var(--bg-main)"
-          stroke="var(--text-secondary)"
-          strokeWidth="1.5"
-          opacity="0.7"
-        />
+        <g key={`ps-${i}`}>
+          <circle
+            cx={ps.cx} cy={ps.cy} r="6"
+            fill="var(--bg-main)"
+            stroke="var(--text-secondary)"
+            strokeWidth="1"
+            opacity="0.6"
+          />
+          <circle
+            cx={ps.cx} cy={ps.cy} r="2.5"
+            fill="var(--text-secondary)"
+            opacity="0.4"
+          />
+        </g>
       ))}
 
-      {/* Accountability Nodes */}
+      {/* 5. Accountability Nodes */}
       {accountabilityNodes.map((node) => (
         <g key={node.id}>
           <circle
-            cx={node.cx}
-            cy={node.cy}
-            r={node.r}
-            fill="var(--bg-main)"
-            stroke="var(--text-main)"
-            strokeWidth="1.5"
-            strokeDasharray="4,4"
-            opacity="0.8"
+            cx={node.cx} cy={node.cy} r={node.r}
+            fill="url(#nodeGrad)"
+            stroke="var(--text-secondary)"
+            strokeWidth="1"
+            strokeDasharray="3,3"
           />
           <text
-            x={node.cx}
-            y={node.cy}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fill="var(--text-main)"
-            fontSize={node.fontSize}
-            fontWeight="700"
-            fontFamily="var(--font)"
+            x={node.cx} y={node.cy}
+            textAnchor="middle" dominantBaseline="middle"
+            fill="var(--text-main)" fontSize={node.fontSize} fontWeight="600" fontFamily="var(--font)" opacity="0.6"
           >
             {node.label.map((line, idx) => (
               <tspan x={node.cx} dy={idx === 0 ? 0 : node.fontSize + 2} key={idx}>{line}</tspan>
@@ -115,40 +123,38 @@ const NetworkSVG = ({ animate }) => {
         </g>
       ))}
 
-      {/* Center Cluster Nodes */}
-      <g filter="url(#shadow)">
-        {/* Node: Reported by Police — Primary Focus */}
+      {/* 6. Central Power Cluster */}
+      <g style={{ filter: 'url(#glow-small)' }}>
+        {/* Pulse Effect for Core */}
+        <motion.circle
+          cx="318" cy="195" r="55"
+          fill="var(--text-main)" opacity="0.05"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.05, 0.1, 0.05] }}
+          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+        />
+
+        {/* Node: Reported by Police */}
         <g>
-          <circle cx="318" cy="195" r="46" fill="var(--bg-main)" stroke="var(--text-main)" strokeWidth="4" />
-          <motion.circle 
-            cx="318" cy="195" r="46" 
-            fill="none" 
-            stroke="var(--text-main)" 
-            strokeWidth="1" 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1.1, opacity: [0, 0.2, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          />
+          <circle cx="318" cy="195" r="48" fill="var(--bg-main)" stroke="var(--text-main)" strokeWidth="3" />
           <text x="318" y="190" textAnchor="middle" fill="var(--text-main)" fontSize="9" fontWeight="900" fontFamily="var(--font)">
             <tspan x="318" dy="0">Reported by</tspan>
             <tspan x="318" dy="11">Police</tspan>
           </text>
-          <text x="318" y="216" textAnchor="middle" fill="var(--text-secondary)" fontSize="7" fontWeight="600" fontFamily="var(--font)">degree: 25</text>
+          <text x="318" y="216" textAnchor="middle" fill="var(--text-secondary)" fontSize="7" opacity="0.6" fontFamily="var(--font)">index: 25</text>
         </g>
 
         {/* Node: Reported by News */}
         <g>
-          <circle cx="422" cy="188" r="46" fill="var(--bg-main)" stroke="var(--text-main)" strokeWidth="2.5" />
+          <circle cx="422" cy="188" r="46" fill="var(--bg-main)" stroke="var(--text-main)" strokeWidth="2" />
           <text x="422" y="183" textAnchor="middle" fill="var(--text-main)" fontSize="8.5" fontWeight="800" fontFamily="var(--font)">
             <tspan x="422" dy="0">Reported by</tspan>
             <tspan x="422" dy="10">News</tspan>
           </text>
-          <text x="422" y="207" textAnchor="middle" fill="var(--text-secondary)" fontSize="7" fontWeight="500" fontFamily="var(--font)">degree: 22</text>
         </g>
 
         {/* Node: Police Killing */}
         <g>
-          <circle cx="318" cy="252" r="40" fill="var(--bg-main)" stroke="var(--text-main)" strokeWidth="2.5" />
+          <circle cx="318" cy="252" r="40" fill="var(--bg-main)" stroke="var(--text-main)" strokeWidth="1.5" opacity="0.9" />
           <text x="318" y="250" textAnchor="middle" fill="var(--text-main)" fontSize="8.5" fontWeight="800" fontFamily="var(--font)">
             <tspan x="318" dy="0">Police</tspan>
             <tspan x="318" dy="10">Killing</tspan>
@@ -157,24 +163,21 @@ const NetworkSVG = ({ animate }) => {
 
         {/* Node: Unidentified Assailant */}
         <g>
-          <circle cx="422" cy="252" r="38" fill="var(--bg-main)" stroke="var(--text-main)" strokeWidth="2.5" />
+          <circle cx="422" cy="252" r="38" fill="var(--bg-main)" stroke="var(--text-main)" strokeWidth="1.5" opacity="0.9" />
           <text x="422" y="250" textAnchor="middle" fill="var(--text-main)" fontSize="8" fontWeight="800" fontFamily="var(--font)">
             <tspan x="422" dy="0">Unidentified</tspan>
             <tspan x="422" dy="10">Assailant</tspan>
           </text>
         </g>
 
-        {/* Node: Reported by Others */}
+        {/* Small Connector: Reported by Others */}
         <g>
-          <circle cx="370" cy="222" r="28" fill="var(--bg-main)" stroke="var(--text-secondary)" strokeWidth="1.5" strokeDasharray="2,2" />
-          <text x="370" y="220" textAnchor="middle" fill="var(--text-main)" fontSize="7" fontWeight="800" fontFamily="var(--font)">
-            <tspan x="370" dy="0">Reported</tspan>
-            <tspan x="370" dy="9">by Others</tspan>
+          <circle cx="370" cy="222" r="24" fill="var(--bg-main)" stroke="var(--text-secondary)" strokeWidth="1" strokeDasharray="2,2" />
+          <text x="370" y="221" textAnchor="middle" fill="var(--text-main)" fontSize="6" fontWeight="700" fontFamily="var(--font)" opacity="0.7">
+            <tspan x="370" dy="0">Others</tspan>
           </text>
         </g>
       </g>
-
-      {/* Legend removed from SVG — now a fixed overlay in the slide component */}
     </svg>
   );
 };
